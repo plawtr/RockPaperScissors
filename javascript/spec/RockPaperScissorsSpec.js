@@ -6,10 +6,8 @@ describe("Player", function() {
 	});
 
 	it("can pick a Pick", function() {
-		pick = new Pick("rock")
 		player1 = new Player("Megan");
-		player1.picks(pick);
-		expect(player1.pick).toEqual(pick);
+		player1.picks("rock");
 		expect(player1.pick.name).toEqual("rock");
 	});
 
@@ -27,7 +25,7 @@ describe("Pick", function() {
 		pick2 = new Pick("paper");	
 		pick3 = new Pick("scissors");
 		expect(pick1.beats(pick2)).toBe(false);
-		expect(pick1.beats(pick3)).toBe('rock smashes scissors'); 
+		expect(pick1.beats(pick3)).toBe('Rock smashes scissors.'); 
 	});
 });
 
@@ -39,6 +37,7 @@ describe("Game", function() {
     player1 = new Player('Player 1');
     player2 = new Player('Player 2');
     game = new Game(player1, player2);
+ 		// pickscissors = 
   });
 
 	it("should take two players", function (){
@@ -46,19 +45,22 @@ describe("Game", function() {
 		expect(game.player2).toEqual(player2);
 	});
 
+	it("rock should beat scissors", function(){		
+    player1.picks('rock');
+    player2.picks('scissors');
+    expect(game.winner()).toBe("Rock smashes scissors.");
+	});
 
-	// describe("Rock", function() {
-	// 	it("should beat scissors", function (){
-	// 		player1.picks('rock');
-	// 		player2.picks('scissors');
-	// 		expect(game.winner()).toBe(player1);
-	// 	});
+	it("spock should be disproven by paper", function() {
+		player1.picks('spock');
+		player2.picks('paper');
+		expect(game.winner()).toEqual("Paper disproves spock.");
+	});
 
-	// 	it("should lose to paper", function (){
-	// 		player1.picks('rock');
-	// 		player2.picks('paper');
-	// 		expect(game.winner()).toBe(player2);
-	// 	});
-	// });
+	it("should handle a draw", function() {
+		player1.picks('spock');
+		player2.picks('spock');
+		expect(game.winner()).toEqual("Draw.");
+	});
 
 });

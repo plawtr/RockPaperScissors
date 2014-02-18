@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>Rock Paper Scissors Lizard Spock</title>
+
+    <link rel="shortcut icon" type="image/png" href="images/favicon.ico">
+
     <style>
     body {
       font-family: 'Helvetica Neue';
@@ -29,11 +32,17 @@
       <img src="images/lizard.png" data-pick='lizard'>
       <img src="images/spock.png" data-pick='spock'>
     </div>
+
+    <h3 id="choices"></h3>
     <h3 id="result"></h3>
 
     <script src='http://code.jquery.com/jquery-2.0.3.js'></script>
-    <script src='lib/RockPaperScissors.js'></script>
+    <script src='src/RockPaperScissors.js'></script>
     <script>
+       selectRandomPick = function() {
+         return $($('.choices img')[Math.floor(Math.random()*5)]).data('pick')
+       };
+
       // document.getElementById('result').innerHTML = 'hello';
       $(document).ready(function(){
         var player1 = new Player('Human');
@@ -44,8 +53,8 @@
           var humanPick = $(this).data('pick');
 
           player1.picks(humanPick);
-          player2.picks('lizard');
-
+          player2.picks(selectRandomPick());
+          $('#choices').text("You chose "+player1.pick.name+". Computer chose "+player2.pick.name+".");
           $('#result').text(game.winner());
         })
       })
